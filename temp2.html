@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head> 
+</head>
+<body>
+    <script>
+    var contacts = [
+    {
+        id:1,
+        name: "Friends",
+        type: "Group",
+        contacts: [
+            {id:2, name: "Udi", type: "Contact"},
+            {id:3, name: "Tommy", type: "Contact"},
+            {
+                id:6,
+                name: "Old Friends",
+                type: "Group",
+                contacts: [
+                    {id:7, name: "Itay", type: "Contact"},
+                ]
+            },
+        ]
+    },
+    {
+        id:4,
+        name: "Family",
+        type: "Group",
+        contacts: [
+            {id:5, name: "Roni", type: "Contact"},
+        ]
+    },
+    {id: 8, name: "Ori", type: "Contact"},
+];
+var body = document.body;
+var curPlaceDom = document.createElement("UL");
+var text = "";
+body.appendChild(curPlaceDom);
+
+    function GetObj(contacts){
+        for(let i = 0; i<contacts.length; i++){
+            text = document.createTextNode(contacts[i].name);
+            var li = document.createElement("li");
+            li.appendChild(text);
+            curPlaceDom.appendChild(li); 
+            li.setAttribute("id", contacts[i].id);
+            if(contacts[i].type === "Group"){
+                li.setAttribute("class", "group");
+            }          
+        }
+
+    }
+
+        document.addEventListener("click", function(event){
+            let elem = event.target;
+            if(elem.getAttribute("class") === "group"){
+                let myId = elem.getAttribute("id");
+                let ul = document.createElement("UL");
+                curPlaceDom = elem.appendChild(ul);
+                getCurrentElement(getCurrentElement(contacts, myId));
+            }
+        });
+
+        function getCurrentElement(contacts, myId){
+            if (contacts !== undefined){
+                for(let i = 0; i<contacts.length; i++){
+                    if(contacts[i].id == myId){
+                        return  GetObj(contacts[i].contacts);
+                    } 
+                    
+                    if(contacts[i].type === "Group"){
+                        curContacts = contacts[i].contacts;
+                        getCurrentElement(curContacts, myId);
+                    }
+                }
+            }
+        }
+
+
+    GetObj(contacts);
+     
+    
+
+    </script>
+</body>
+</html>
