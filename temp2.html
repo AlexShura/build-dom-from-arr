@@ -33,17 +33,17 @@
     {id: 8, name: "Ori", type: "Contact"},
 ];
 var body = document.body;
-var curPlaceDom = document.createElement("UL");
+var curPlaceDom = document.createElement("UL"); // remapping in click function
 var text = "";
 body.appendChild(curPlaceDom);
 
-    function GetObj(contacts){
+    function getObj(contacts){
         for(let i = 0; i<contacts.length; i++){
             text = document.createTextNode(contacts[i].name);
-            var li = document.createElement("li");
+            let li = document.createElement("li");
             li.appendChild(text);
             curPlaceDom.appendChild(li); 
-            li.setAttribute("id", contacts[i].id);
+            li.setAttribute("id", "item" + contacts[i].id);
             if(contacts[i].type === "Group"){
                 li.setAttribute("class", "group");
             }          
@@ -53,19 +53,25 @@ body.appendChild(curPlaceDom);
 
         document.addEventListener("click", function(event){
             let elem = event.target;
-            if(elem.getAttribute("class") === "group"){
-                let myId = elem.getAttribute("id");
-                let ul = document.createElement("UL");
-                curPlaceDom = elem.appendChild(ul);
-                getCurrentElement(getCurrentElement(contacts, myId));
-            }
+            let myId = elem.getAttribute("id");
+             if(!document.querySelector("#" + myId + " ul")){
+                if(elem.getAttribute("class") === "group"){
+                    let myId = elem.getAttribute("id");
+                    let ul = document.createElement("UL");
+                    curPlaceDom = elem.appendChild(ul);
+                    getCurrentElement(getCurrentElement(contacts, myId));
+                }
+             } else {
+               let removeElement =  document.querySelector("#" + myId + " ul");
+               removeElement.remove();
+             }
         });
 
         function getCurrentElement(contacts, myId){
             if (contacts !== undefined){
                 for(let i = 0; i<contacts.length; i++){
-                    if(contacts[i].id == myId){
-                        return  GetObj(contacts[i].contacts);
+                    if("item" + contacts[i].id == myId){
+                        return  getObj(contacts[i].contacts);
                     } 
                     
                     if(contacts[i].type === "Group"){
@@ -77,7 +83,7 @@ body.appendChild(curPlaceDom);
         }
 
 
-    GetObj(contacts);
+    getObj(contacts);
      
     
 
