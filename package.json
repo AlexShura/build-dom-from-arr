@@ -1,0 +1,23 @@
+{
+  "name": "build-from-dom-arr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index2.html",
+  "scripts": {
+    "start": "http-server", 
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexShura/build-dom-from-arr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexShura/build-dom-from-arr/issues"
+  },
+  "homepage": "https://github.com/AlexShura/build-dom-from-arr#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
